@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.smallbird.modules.sys.dao.SysMenuDao">
+
+	<select id="queryListParentId" resultType="io.smallbird.modules.sys.entity.SysMenuEntity">
+		select * from sys_menu where parent_id = #{parentId} order by order_num asc 
+	</select>
+	
+	<select id="queryNotButtonList" resultType="io.smallbird.modules.sys.entity.SysMenuEntity">
+		select * from sys_menu where type != 2 order by order_num asc 
+	</select>
+
+	<select id="getAllRoleMenuList" resultType="io.smallbird.modules.sys.dto.SysRoleMenuDto">
+		SELECT
+			s1.role_id,
+			s2.role_name,
+			GROUP_CONCAT(s1.menu_id) menuIdList,
+			GROUP_CONCAT(s3.name) menuNameList,
+			s1.update_time updateTime
+		FROM
+			`sys_role_menu` s1
+			LEFT JOIN sys_role s2 ON s2.role_id = s1.role_id
+			LEFT JOIN sys_menu s3 ON s3.menu_id = s1.menu_id
+		<if test="roleId != null and roleId != ''">
+			where s1.role_id = #{roleId}
+		</if>
+		GROUP BY
+			s1.role_id
+	</select>
+
+	<select id="getMenuListByRoleId" resultType="io.smallbird.modules.sys.dto.SysRoleMenuDto">
+		SELECT
+		s1.role_id,
+		s2.role_name,
+		GROUP_CONCAT(s1.menu_id) menuIdList,
+		GROUP_CONCAT(s3.name) menuNameList,
+		s1.update_time updateTime
+		FROM
+		`sys_role_menu` s1
+		LEFT JOIN sys_role s2 ON s2.role_id = s1.role_id
+		LEFT JOIN sys_menu s3 ON s3.menu_id = s1.menu_id
+		<if test="roleId != null and roleId != ''">
+			where s1.role_id = #{roleId}
+		</if>
+		GROUP BY
+		s1.role_id
+	</select>
+	
+</mapper>

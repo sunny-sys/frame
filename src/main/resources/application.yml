@@ -1,0 +1,59 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 9999
+  servlet:
+    context-path: /smallbird
+
+spring:
+  profiles:
+    active: common,dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  freemarker:
+    suffix: .html
+    request-context-attribute: request
+    ##### 加入ehcache缓存配置 #####
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
+
+yifu:
+  cluster: false  #集群配置  true集群环境   false单机环境，还需打开pom.xml里的spring-session-data-redis注释
+  globalSessionTimeout: 604800   #单机环境，session过期时间为7天
+  redis:
+    open: false  #是否开启redis缓存  true开启   false关闭
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: io.yifu.modules.*.entity
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  #原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+upload:
+  rootPath: c:/
+  relativePath: smallbird/

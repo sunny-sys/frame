@@ -1,0 +1,9 @@
+#短信配置
+ali:
+  sms:
+    templateCode: SMS_163052677
+    access:
+      signName: 怡富-智慧工地
+      key:
+        id: LTAIWVvYqkcLHaCg
+        secret: ugwwho1wEAcFmJ1wWvfsgAX3QJEyvo

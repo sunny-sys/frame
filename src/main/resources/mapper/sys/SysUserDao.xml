@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.smallbird.modules.sys.dao.SysUserDao">
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #{userId}
+	</select>
+
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPermList" resultType="io.smallbird.modules.sys.vo.PermListVo">
+		select GROUP_CONCAT(m.menu_id) menuId,GROUP_CONCAT(m.name) menuName,GROUP_CONCAT(m.perms) from sys_user_role ur
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id
+		where ur.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="long">
+		select distinct rm.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+		where ur.user_id = #{userId}
+	</select>
+
+	<!-- 获取注册信息列表 -->
+	<select id="queryRegisterListPage" resultType="io.smallbird.modules.sys.vo.RegisterVo" parameterType="String">
+		select u.*,r.role_name roleName from sys_user u
+		left join sys_user_role ur on ur.user_id = u.user_id
+		left join sys_role r on ur.role_id = r.role_id
+		where
+		<if test="userType != null and userType != ''"><!--用户类型-->
+			u.user_type = #{userType}
+		</if>
+		order by u.create_time desc
+	</select>
+
+</mapper>

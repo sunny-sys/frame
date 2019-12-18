@@ -1,0 +1,14 @@
+**/.hg/
+**/.settings/
+**/.hgignore
+**/.project
+.idea
+**/target/
+**/*.iml
+**/.classpath
+**/LOG_PATH_IS_UNDEFINED/
+.externalToolBuilders/
+nl-basic-logs
+logs
+src/main/resources/rebel.xml
+src/main/resources/rebel-remote.xml
