@@ -23,7 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <quartz.version>2.3.0</quartz.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.7.1</shiro.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
